@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Sistema Integral de Información - Sitio del Alumno</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:Arial,Helvetica,sans-serif;font-size:12px;background:#fff;color:#333;overflow-x:hidden;}
+
+/* ── HEADER ── */
+.header{
+  background:#fff;
+  border-bottom:1px solid #ccc;
+  padding:4px 10px 4px 6px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  min-height:62px;
+}
+.header-left{display:flex;align-items:center;gap:8px;}
+.logo-img{width:58px;height:58px;object-fit:contain;}
+.header-title h1{font-size:18px;font-weight:bold;color:#003399;text-transform:uppercase;line-height:1.2;}
+.header-title h2{font-size:12px;font-weight:bold;color:#CC0000;font-style:italic;text-transform:uppercase;margin-top:1px;}
+.header-right{text-align:right;font-size:11px;color:#333;line-height:1.6;}
+.welcome-line{font-size:11px;margin-bottom:1px;}
+.logout-link{
+  color:#CC0000;
+  text-decoration:underline;
+  font-size:11.5px;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  gap:3px;
+  justify-content:flex-end;
+}
+.logout-icon{
+  width:14px;height:14px;
+  background:#CC0000;
+  border-radius:50%;
+  color:#fff;
+  font-size:9px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:bold;
+  flex-shrink:0;
+}
+.datetime{font-size:11px;color:#333;margin-top:2px;}
+
+/* ── LAYOUT ── */
+.main-wrapper{display:flex;width:100%;min-height:calc(100vh - 62px);}
+
+/* ── SIDEBAR ── */
+.sidebar{
+  width:192px;
+  min-width:192px;
+  max-width:192px;
+  background:#fff;
+  border-right:1px solid #ccc;
+  padding:6px 0 6px 6px;
+  overflow:hidden;
+}
+.photo-box{
+  width:130px;
+  height:140px;
+  border:1px solid #aaa;
+  background:#c0c0c0;
+  margin:0 0 4px 0;
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.photo-box img{width:100%;height:100%;object-fit:cover;display:block;}
+.sidebar-num{font-size:11px;color:#333;margin-bottom:3px;padding-left:1px;}
+.info-table{width:100%;border-collapse:collapse;table-layout:fixed;}
+.info-table td{
+  padding:1.5px 2px;
+  font-size:11px;
+  vertical-align:top;
+  overflow:hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+  line-height:1.55;
+}
+.info-table td:first-child{
+  font-weight:bold;
+  text-align:right;
+  padding-right:4px;
+  width:108px;
+  min-width:108px;
+  color:#333;
+}
+.info-table td:last-child{
+  color:#000;
+  max-width:80px;
+  overflow:hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+}
+
+/* ── CONTENT ── */
+.content{flex:1;background:#fff;display:flex;flex-direction:column;overflow:hidden;}
+
+/* ── TAB BAR ── */
+.tab-bar-wrapper{
+  display:flex;
+  align-items:stretch;
+  background:#e8e8e8;
+  border-bottom:2px solid #999;
+  flex-shrink:0;
+}
+.tab-arrow{
+  width:20px;
+  background:#d4d4d4;
+  border-right:1px solid #bbb;
+  border-left:1px solid #bbb;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:10px;
+  color:#444;
+  flex-shrink:0;
+  user-select:none;
+}
+.tab-arrow:last-child{border-left:1px solid #bbb;border-right:none;}
+.tab-arrow:hover{background:#bbb;}
+.tabs-scroll{display:flex;overflow:hidden;flex:1;}
+.tab{
+  padding:6px 14px 5px 14px;
+  font-size:11.5px;
+  cursor:pointer;
+  border:1px solid #bbb;
+  border-bottom:none;
+  background:#dcdcdc;
+  color:#333;
+  margin-right:2px;
+  margin-top:3px;
+  border-radius:3px 3px 0 0;
+  white-space:nowrap;
+  user-select:none;
+  flex-shrink:0;
+}
+.tab:hover{background:#c8c8c8;}
+.tab.active{
+  background:#fff;
+  border-bottom:2px solid #fff;
+  font-weight:bold;
+  margin-bottom:-2px;
+  z-index:1;
+  position:relative;
+}
+
+/* ── TAB PANELS ── */
+.tab-panels{padding:8px 8px 8px 8px;flex:1;}
+.tab-panel{display:none;}
+.tab-panel.active{display:block;}
+
+/* ── AVISO AMARILLO ── */
+.aviso-box{
+  background:#ffffc0;
+  border:1px solid #d8d800;
+  padding:8px 10px;
+  margin-bottom:10px;
+}
+.aviso-header{display:flex;align-items:center;gap:6px;margin-bottom:5px;}
+.aviso-icon{
+  width:20px;height:20px;
+  background:#ffcc00;
+  border:2px solid #bb9900;
+  border-radius:3px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:12px;font-weight:bold;color:#555;
+  flex-shrink:0;
+}
+.aviso-header h3{font-size:12.5px;font-weight:bold;}
+.aviso-box>p{font-size:11.5px;margin-bottom:6px;}
+.aviso-table{width:100%;border-collapse:collapse;font-size:11.5px;}
+.aviso-table th{
+  background:#d0d0d0;
+  border:1px solid #aaa;
+  padding:3px 8px;
+  text-align:left;
+  font-weight:bold;
+}
+.aviso-table td{border:1px solid #ccc;padding:3px 8px;background:#fff;}
+.aviso-table .empty-row td{text-align:center;color:#333;}
+.total-line{font-size:11.5px;margin-top:5px;}
+.total-line span{color:#0000cc;}
+
+/* ── ADEUDOS AZUL ── */
+.adeudos-box{
+  background:#d8eaf8;
+  border:1px solid #a0bcd8;
+  padding:8px 10px;
+}
+.adeudos-header{display:flex;align-items:center;gap:6px;margin-bottom:5px;}
+.adeudos-icon{
+  width:20px;height:20px;
+  background:#3a7cc1;
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-weight:bold;font-size:12px;
+  flex-shrink:0;
+}
+.adeudos-header h3{font-size:12.5px;font-weight:bold;}
+.adeudos-box>p{font-size:11.5px;margin-bottom:6px;}
+.adeudos-table{width:100%;border-collapse:collapse;font-size:11.5px;}
+.adeudos-table th{
+  background:#b8d0e8;
+  border:1px solid #90b0d0;
+  padding:3px 8px;
+  text-align:left;
+  font-weight:bold;
+}
+.adeudos-table td{border:1px solid #a8c8e0;padding:4px 8px;background:#fff;vertical-align:top;}
+.adeudos-table td:first-child{text-align:center;width:28px;}
+.adeudos-table .col-area{width:180px;text-align:left;}
+
+.placeholder-tab{padding:30px;text-align:center;color:#888;font-size:12px;}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-left">
+    <img class="logo-img" src="assets/logo.png" alt="UPQ" onerror="this.style.display='none';document.getElementById('logo-fallback').style.display='flex'"/>
+    <div id="logo-fallback" style="display:none;width:58px;height:58px;border-radius:50%;border:3px solid #8B0000;background:#fff;align-items:center;justify-content:center;font-weight:bold;font-size:14px;color:#003399;flex-shrink:0;">UPQ</div>
+    <div class="header-title">
+      <h1>Sistema Integral de Información</h1>
+      <h2>Sitio del Alumno</h2>
+    </div>
+  </div>
+  <div class="header-right">
+    <div class="welcome-line">Bienvenido</div>
+    <div class="logout-link"><span class="logout-icon">✕</span>&nbsp;Terminar sesión</div>
+    <div class="datetime" id="clock"></div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main-wrapper">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="photo-box">
+      <img src="assets/foto.jpeg" alt="Foto alumno"
+           onerror="this.outerHTML='<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'130\' height=\'140\' viewBox=\'0 0 130 140\'><rect width=\'130\' height=\'140\' fill=\'#c0c0c0\'/><ellipse cx=\'65\' cy=\'50\' rx=\'26\' ry=\'28\' fill=\'#888\'/><ellipse cx=\'65\' cy=\'125\' rx=\'48\' ry=\'38\' fill=\'#888\'/></svg>'"/>
+    </div>
+    <div class="sidebar-num"></div>
+    <table class="info-table">
+      <tr><td>Nombre:</td><td>Xime</td></tr>
+      <tr><td>Matricula:</td><td>1230</td></tr>
+      <tr><td>Carrera:</td><td>Inge Siste Comp</td></tr>
+      <tr><td>TSU:</td><td>no</td></tr>
+      <tr><td>Estatus TSU:</td><td>En pr</td></tr>
+      <tr><td>Generación:</td><td>2022</td></tr>
+      <tr><td>Grupo:</td><td>201</td></tr>
+      <tr><td>Último Cuatrimestre:</td><td>8vo</td></tr>
+      <tr><td>Promedio General:</td><td>8.6</td></tr>
+      <tr><td>Materias Aprobadas:</td><td></td></tr>
+      <tr><td>Créditos Aprobados:</td><td></td></tr>
+      <tr><td>Materias No Acreditadas:</td><td></td></tr>
+      <tr><td>Nivel Inglés:</td><td></td></tr>
+      <tr><td>Estatus Actual:</td><td></td></tr>
+      <tr><td>NSS:</td><td></td></tr>
+      <tr><td>Tutores:</td><td></td></tr>
+      <tr><td>Correo Tutor:</td><td></td></tr>
+      <tr><td>Servicio Social:</td><td></td></tr>
+    </table>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content">
+    <div class="tab-bar-wrapper">
+      <div class="tab-arrow" onclick="scrollTabs(-1)">&#9664;</div>
+      <div class="tabs-scroll" id="tabs-scroll">
+        <div class="tab active" onclick="showTab('notificaciones',this)">Notificaciones</div>
+        <div class="tab" onclick="showTab('panel-principal',this)">Panel Principal</div>
+        <div class="tab" onclick="showTab('trayectoria',this)">Trayectoria Escolar</div>
+        <div class="tab" onclick="showTab('info-personal',this)">Información Personal</div>
+        <div class="tab" onclick="showTab('desempeno',this)">Desempeño Escolar</div>
+      </div>
+      <div class="tab-arrow" onclick="scrollTabs(1)">&#9654;</div>
+    </div>
+
+    <div class="tab-panels">
+
+      <!-- NOTIFICACIONES -->
+      <div class="tab-panel active" id="notificaciones">
+
+        <div class="aviso-box">
+          <div class="aviso-header">
+            <div class="aviso-icon">⚠</div>
+            <h3>Aviso Importante</h3>
+          </div>
+          <p>El alumno tiene los siguientes adeudos:</p>
+          <table class="aviso-table">
+            <thead>
+              <tr><th>#</th><th>Referencia</th><th>Concepto</th></tr>
+            </thead>
+            <tbody>
+              <tr class="empty-row"><td colspan="3">NO SE ENCONTRARON REGISTROS</td></tr>
+            </tbody>
+          </table>
+          <div class="total-line"><strong>Total de registros:</strong> <span>0</span></div>
+        </div>
+
+        <div class="adeudos-box">
+          <div class="adeudos-header">
+            <div class="adeudos-icon">i</div>
+            <h3>Adeudos de servicios y/o documentos</h3>
+          </div>
+          <p>El alumno tiene los siguientes adeudos por concepto de servicios y/o documentos:</p>
+          <table class="adeudos-table">
+            <thead>
+              <tr><th>#</th><th>Motivo</th><th class="col-area">Area adeudo</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>ADEUDA A SERVICIOS ESTUDIANTILES: SIN FINALIZAR PROCESO DE ASEGURAMIENTO. FAVOR DE REVISAR EL CORREO ENVIADO POR EL DEPARTAMENTO CORRESPONDIENTE.</td>
+                <td class="col-area">SERVICIOS ESTUDIANTILES</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="panel-principal"><div class="placeholder-tab">Panel Principal</div></div>
+      <div class="tab-panel" id="trayectoria"><div class="placeholder-tab">Trayectoria Escolar</div></div>
+      <div class="tab-panel" id="info-personal"><div class="placeholder-tab">Información Personal</div></div>
+      <div class="tab-panel" id="desempeno"><div class="placeholder-tab">Desempeño Escolar</div></div>
+    </div>
+  </div>
+</div>
+
+<script>
+function updateClock(){
+  const d=new Date();
+  const days=['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+  const months=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+  const h=String(d.getHours()).padStart(2,'0'),m=String(d.getMinutes()).padStart(2,'0'),s=String(d.getSeconds()).padStart(2,'0');
+  document.getElementById('clock').textContent=`${days[d.getDay()]} ${d.getDate()} de ${months[d.getMonth()]} de ${d.getFullYear()} - ${h} : ${m} : ${s}`;
+}
+updateClock(); setInterval(updateClock,1000);
+
+function showTab(id,el){
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  el.classList.add('active');
+}
+
+function scrollTabs(dir){
+  document.getElementById('tabs-scroll').scrollBy({left:dir*120,behavior:'smooth'});
+}
+</script>
+</body>
+</html>
